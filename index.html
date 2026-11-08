@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nirvanadle</title>
+    <link rel="icon" type="image/png" href="nirvana-logo-png_seeklogo-285910.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="background-color: black;">
+        <img src="NirvanadleLogo.png" class="logo" draggable="false">
+
+        <button class="play-button" onclick="playButton()">
+            <img id="play-button-image" src="PlayButtonNirvanadle.png" draggable="false">
+        </button>
+
+        <input list="song-suggestions" id = "guess" class = "input-field" placeholder="Guess a Nirvana song...">
+
+        <div id="result-popup" class="popup">
+            <h2 id="result-text" class="result-text"></h2>
+            <button class="new-song-button"onclick="closePopup()">New song</button>
+        </div>
+
+        <datalist id="song-suggestions"></datalist>
+
+        <audio id="audio"></audio>
+
+        <script src="songs.js"></script>
+        <script src="script.js"></script>
+</body>
+</html>

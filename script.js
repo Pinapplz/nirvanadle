@@ -1,0 +1,68 @@
+const audio = document.getElementById("audio");
+const img = document.getElementById("play-button-image");
+const suggestions = document.getElementById("song-suggestions");
+let currentSong
+
+pickRandomSong();
+
+function pickRandomSong() {
+    const randomIndex = Math.floor(Math.random() * songs.length);
+    const randomSong = songs[randomIndex];
+
+    audio.src = randomSong.file;
+    currentSong = randomSong.name
+    console.log("Current song: " + currentSong);
+}
+
+function playButton() {
+    if (audio.paused) {
+        audio.play();
+        if (img) img.src = "PauseButtonNirvanadle.png";
+    } else {
+        audio.pause();
+        if (img) img.src = "PlayButtonNirvanadle.png";
+    }
+}
+
+audio.addEventListener("ended", () => {
+    img.src = "PlayButtonNirvanadle.png";
+});
+
+songs.forEach(song => {
+    const option = document.createElement("option");
+
+    option.value = song.name;
+
+    suggestions.appendChild(option);
+});
+
+function checkGuess() {
+    const guess = document.getElementById("guess").value;
+    const resultPopup = document.getElementById("result-popup");
+    const resultText = document.getElementById("result-text");
+
+    if (guess.trim().toLowerCase() === currentSong.toLowerCase()) {
+        resultText.textContent = "Correct!";
+    }
+    else {
+        resultText.textContent = "Incorrect: \n\n" + currentSong;
+    }
+
+    audio.pause();
+    if (img) img.src = "PlayButtonNirvanadle.png";
+
+    resultPopup.classList.add("show");
+}
+
+function closePopup() {
+    document.getElementById("result-popup").classList.remove("show");
+    pickRandomSong();
+}
+
+const guessInput = document.getElementById("guess");
+
+guessInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        checkGuess();
+    }
+});
