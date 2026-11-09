@@ -1,6 +1,7 @@
 const audio = document.getElementById("audio");
 const img = document.getElementById("play-button-image");
 const suggestions = document.getElementById("song-suggestions");
+const input = document.getElementById("guess")
 let currentSong;
 let correct = 0;
 let incorect = 0;
@@ -20,10 +21,10 @@ function pickRandomSong() {
 function playButton() {
     if (audio.paused) {
         audio.play();
-        if (img) img.src = "PauseButtonNirvanadle.png";
+        if (img) img.src = "PauseButtonNarvanadle.png";
     } else {
         audio.pause();
-        if (img) img.src = "PlayButtonNirvanadle.png";
+        if (img) img.src = "PlayButtonNarvanadle.png";
     }
 }
 
@@ -59,7 +60,7 @@ function checkGuess() {
 
 
     audio.pause();
-    if (img) img.src = "PlayButtonNirvanadle.png";
+    if (img) img.src = "PlayButtonNarvanadle.png";
 
     resultPopup.classList.add("show");
 }
@@ -67,6 +68,7 @@ function checkGuess() {
 function closePopup() {
     document.getElementById("result-popup").classList.remove("show");
     pickRandomSong();
+    input.value = null
     alreadyGuessed = false
 }
 
