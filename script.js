@@ -2,6 +2,7 @@ const audio = document.getElementById("audio");
 const img = document.getElementById("play-button-image");
 const suggestions = document.getElementById("song-suggestions");
 const input = document.getElementById("guess")
+const nikolasMode = document.getElementById("nikolasModeSwitch")
 let currentSong;
 let correct = 0;
 let incorect = 0;
@@ -10,8 +11,17 @@ let alreadyGuessed = false
 pickRandomSong();
 
 function pickRandomSong() {
-    const randomIndex = Math.floor(Math.random() * songs.length);
-    const randomSong = songs[randomIndex];
+    let randomIndex = 0
+    let randomSong
+
+    if (!nikolasMode.checked) {
+        randomIndex = Math.floor(Math.random() * songs.length);
+        randomSong = songs[randomIndex];
+    }
+    else {
+        randomIndex = Math.floor(Math.random() * nikolasSongs.length);
+        randomSong = nikolasSongs[randomIndex];
+    }
 
     audio.src = randomSong.file;
     currentSong = randomSong.name
@@ -80,3 +90,34 @@ guessInput.addEventListener("keydown", function(event) {
         alreadyGuessed = true
     }
 });
+
+nikolasMode.addEventListener('change', (event) => {
+    pickRandomSong()
+    if (event.target.checked) {
+      while (suggestions.firstChild) {
+            suggestions.removeChild(suggestions.firstChild);
+        }
+
+      nikolasSongs.forEach(song => {
+            const option = document.createElement("option");
+
+            option.value = song.name;
+
+            suggestions.appendChild(option);
+        });
+    }
+    else {
+      while (suggestions.firstChild) {
+            suggestions.removeChild(suggestions.firstChild);
+        }
+
+      songs.forEach(song => {
+            const option = document.createElement("option");
+
+            option.value = song.name;
+
+            suggestions.appendChild(option);
+        });
+    }
+}
+)

@@ -15,11 +15,21 @@
             <img id="play-button-image" src="PlayButtonNarvanadle.png" draggable="false">
         </button>
 
-        <input list="song-suggestions" id = "guess" class = "input-field" placeholder="Guess a Nirvana song...">
+        <input list="song-suggestions" id="guess" class="input-field" placeholder="Guess a Nirvana song...">
+
+        <!-- Wrapper for text and switch -->
+        <label class="switch-container">
+            <span class="nikolas-toggle-text">Nikolas Mode</span>
+            <div class="switch">
+                <input type="checkbox" id="nikolasModeSwitch">
+                <span class="slider"></span>
+            </div>
+        </label>
+
 
         <div id="result-popup" class="popup">
             <h2 id="result-text" class="result-text"></h2>
-            <button class="new-song-button"onclick="closePopup()">New song</button>
+            <button class="new-song-button" onclick="closePopup()">New song</button>
         </div>
 
         <datalist id="song-suggestions"></datalist>
@@ -27,6 +37,7 @@
         <audio id="audio"></audio>
 
         <script src="songs.js"></script>
+        <script src="nikolasSongs.js"></script>
         <script src="script.js"></script>
 </body>
 </html>

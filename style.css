@@ -33,7 +33,7 @@
     margin-left: auto;
     margin-right: auto;
 
-    transition: transform 0.15s ease-out;
+    transition: transform 0.15s ease-out, filter 0.15s ease-out;
 }
 
 .play-button img {
@@ -44,6 +44,7 @@
 
 .play-button:hover {
     transform: scale(1.05);
+    filter: drop-shadow(0 0 5px #ffea01e0);
 }
 
 .play-button:active {
@@ -97,7 +98,7 @@
 }
 
 .new-song-button {
-    transition: transform 0.15s ease-out;
+    transition: transform 0.15s ease-out, filter 0.15s ease-out;
     border-radius: 100px;
     border-color: transparent;
     width: 25%;
@@ -109,8 +110,75 @@
 
 .new-song-button:hover {
     transform: scale(1.05);
+    filter: drop-shadow(0 0 15px #ffea01e0);
 }
 
 .new-song-button:active {
     transform: scale(0.975);
+}
+
+.switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 35px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.nikolas-toggle-text {
+    font-family: "RegularText";
+    color: #ffeb01;
+    font-size: 20px;
+    user-select: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #222;
+  transition: 0.1s ease-out;
+  border-radius: 100px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: black;
+  transition: 0.1s ease-out;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #ffea01e0;
+  filter: drop-shadow(0 0 5px #ffea01e0);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
