@@ -1,7 +1,10 @@
 const audio = document.getElementById("audio");
 const img = document.getElementById("play-button-image");
 const suggestions = document.getElementById("song-suggestions");
-let currentSong
+let currentSong;
+let correct = 0;
+let incorect = 0;
+let alreadyGuessed = false
 
 pickRandomSong();
 
@@ -37,16 +40,23 @@ songs.forEach(song => {
 });
 
 function checkGuess() {
+    if (alreadyGuessed) return
+
     const guess = document.getElementById("guess").value;
     const resultPopup = document.getElementById("result-popup");
     const resultText = document.getElementById("result-text");
 
     if (guess.trim().toLowerCase() === currentSong.toLowerCase()) {
-        resultText.textContent = "Correct!";
+        correct += 1;
+        let score = correct - incorect
+        resultText.textContent = "Correct! \n\n Correct: " + correct + "\n Incorrect: " + incorect + "\n\n Score: " + score;
     }
     else {
+        incorect += 1;
         resultText.textContent = "Incorrect: \n\n" + currentSong;
     }
+
+
 
     audio.pause();
     if (img) img.src = "PlayButtonNirvanadle.png";
@@ -57,6 +67,7 @@ function checkGuess() {
 function closePopup() {
     document.getElementById("result-popup").classList.remove("show");
     pickRandomSong();
+    alreadyGuessed = false
 }
 
 const guessInput = document.getElementById("guess");
@@ -64,5 +75,6 @@ const guessInput = document.getElementById("guess");
 guessInput.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         checkGuess();
+        alreadyGuessed = true
     }
 });
