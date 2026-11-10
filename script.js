@@ -5,26 +5,55 @@ const input = document.getElementById("guess")
 const nikolasMode = document.getElementById("nikolasModeSwitch")
 let currentSong;
 let correct = 0;
-let incorect = 0;
+let incorrect = 0; // Fixed typo
 let alreadyGuessed = false
+
+// Track a separate shuffled array and game index for both modes
+let regularPlaylist = [];
+let regularIndex = 0;
+let nikolasPlaylist = [];
+let nikolasIndex = 0;
+
+// Fisher-Yates Shuffle helper function
+function shuffle(array) {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+// Generate the initial non-repeating playlists
+regularPlaylist = shuffle(songs);
+nikolasPlaylist = shuffle(nikolasSongs);
 
 pickRandomSong();
 
 function pickRandomSong() {
-    let randomIndex = 0
-    let randomSong
+    let randomSong;
 
     if (!nikolasMode.checked) {
-        randomIndex = Math.floor(Math.random() * songs.length);
-        randomSong = songs[randomIndex];
+        // Reshuffle if we've gone through all the regular songs
+        if (regularIndex >= regularPlaylist.length) {
+            regularPlaylist = shuffle(songs);
+            regularIndex = 0;
+        }
+        randomSong = regularPlaylist[regularIndex];
+        regularIndex++;
     }
     else {
-        randomIndex = Math.floor(Math.random() * nikolasSongs.length);
-        randomSong = nikolasSongs[randomIndex];
+        // Reshuffle if we've gone through all the Nikolas songs
+        if (nikolasIndex >= nikolasPlaylist.length) {
+            nikolasPlaylist = shuffle(nikolasSongs);
+            nikolasIndex = 0;
+        }
+        randomSong = nikolasPlaylist[nikolasIndex];
+        nikolasIndex++;
     }
 
     audio.src = randomSong.file;
-    currentSong = randomSong.name
+    currentSong = randomSong.name;
     console.log("Current song: " + currentSong);
 }
 
@@ -39,14 +68,12 @@ function playButton() {
 }
 
 audio.addEventListener("ended", () => {
-    img.src = "PlayButtonNirvanadle.png";
+    if (img) img.src = "PlayButtonNarvanadle.png"; // Fixed typo to match Narvanadle asset
 });
 
 songs.forEach(song => {
     const option = document.createElement("option");
-
     option.value = song.name;
-
     suggestions.appendChild(option);
 });
 
@@ -59,15 +86,13 @@ function checkGuess() {
 
     if (guess.trim().toLowerCase() === currentSong.toLowerCase()) {
         correct += 1;
-        let score = correct - incorect
-        resultText.textContent = "Correct! \n\n Correct: " + correct + "\n Incorrect: " + incorect + "\n\n Score: " + score;
+        let score = correct - incorrect
+        resultText.textContent = "Correct! \n\n Correct: " + correct + "\n Incorrect: " + incorrect + "\n\n Score: " + score;
     }
     else {
-        incorect += 1;
+        incorrect += 1;
         resultText.textContent = "Incorrect: \n\n" + currentSong;
     }
-
-
 
     audio.pause();
     if (img) img.src = "PlayButtonNarvanadle.png";
@@ -98,30 +123,25 @@ nikolasMode.addEventListener('change', (event) => {
     if (img) img.src = "PlayButtonNarvanadle.png";
     
     if (event.target.checked) {
-      while (suggestions.firstChild) {
+        while (suggestions.firstChild) {
             suggestions.removeChild(suggestions.firstChild);
         }
 
-      nikolasSongs.forEach(song => {
+        nikolasSongs.forEach(song => {
             const option = document.createElement("option");
-
             option.value = song.name;
-
             suggestions.appendChild(option);
         });
     }
     else {
-      while (suggestions.firstChild) {
+        while (suggestions.firstChild) {
             suggestions.removeChild(suggestions.firstChild);
         }
 
-      songs.forEach(song => {
+        songs.forEach(song => {
             const option = document.createElement("option");
-
             option.value = song.name;
-
             suggestions.appendChild(option);
         });
     }
-}
-)
+});
