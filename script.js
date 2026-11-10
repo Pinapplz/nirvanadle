@@ -5,16 +5,14 @@ const input = document.getElementById("guess")
 const nikolasMode = document.getElementById("nikolasModeSwitch")
 let currentSong;
 let correct = 0;
-let incorrect = 0; // Fixed typo
+let incorrect = 0;
 let alreadyGuessed = false
 
-// Track a separate shuffled array and game index for both modes
 let regularPlaylist = [];
 let regularIndex = 0;
 let nikolasPlaylist = [];
 let nikolasIndex = 0;
 
-// Fisher-Yates Shuffle helper function
 function shuffle(array) {
     const copy = [...array];
     for (let i = copy.length - 1; i > 0; i--) {
@@ -24,7 +22,6 @@ function shuffle(array) {
     return copy;
 }
 
-// Generate the initial non-repeating playlists
 regularPlaylist = shuffle(songs);
 nikolasPlaylist = shuffle(nikolasSongs);
 
@@ -34,7 +31,6 @@ function pickRandomSong() {
     let randomSong;
 
     if (!nikolasMode.checked) {
-        // Reshuffle if we've gone through all the regular songs
         if (regularIndex >= regularPlaylist.length) {
             regularPlaylist = shuffle(songs);
             regularIndex = 0;
@@ -43,7 +39,6 @@ function pickRandomSong() {
         regularIndex++;
     }
     else {
-        // Reshuffle if we've gone through all the Nikolas songs
         if (nikolasIndex >= nikolasPlaylist.length) {
             nikolasPlaylist = shuffle(nikolasSongs);
             nikolasIndex = 0;
@@ -68,7 +63,7 @@ function playButton() {
 }
 
 audio.addEventListener("ended", () => {
-    if (img) img.src = "PlayButtonNarvanadle.png"; // Fixed typo to match Narvanadle asset
+    if (img) img.src = "PlayButtonNarvanadle.png";
 });
 
 songs.forEach(song => {
