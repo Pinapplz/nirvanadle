@@ -114,6 +114,9 @@ guessInput.addEventListener("keydown", function(event) {
 nikolasMode.addEventListener('change', (event) => {
     pickRandomSong()
 
+    correct = 0;
+    incorrect = 0;
+
     audio.pause();
     if (img) img.src = "PlayButtonNarvanadle.png";
     
